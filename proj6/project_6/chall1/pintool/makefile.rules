@@ -1,0 +1,7 @@
+# Set name of cpp file to be compiled into pintool
+TOOL_NAME=dump_indirect_addrs
+TOOL_ROOTS := $(TOOL_NAME)
+
+# Compile the pintool
+$(OBJDIR)$(TOOL_NAME)$(PINTOOL_SUFFIX): $(OBJDIR)$(TOOL_NAME)$(OBJ_SUFFIX) $(CONTROLLERLIB)
+	$(LINKER) $(TOOL_LDFLAGS) $(LINK_EXE)$@ $^ $(TOOL_LPATHS) $(TOOL_LIBS)

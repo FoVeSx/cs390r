@@ -1,0 +1,9 @@
+add_desert() does read(0, buf, 8) — it will read exactly 8 bytes from the socket/STDIN (or fewer if stream ends).
+
+You are using io.sendline(p64(...)). sendline() appends a \n, so you send 9 bytes (8-byte p64 + \n).
+
+read(0, buf, 8) consumes the first 8 bytes (the p64), leaving the \n in the input buffer.
+
+Back in the menu, cook() does fgets(buf, sizeof(buf), stdin) with sizeof(buf)==8. If the next thing in the stream is a \n, fgets will read that newline into buf, so atoi(buf) returns 0 → the default: branch → prints Invalid option! and exits.
+
+(You observed the threshold around 6/7 because of how fgets uses size-1 and the exact lengths when you typed ASCII vs sent binary; the root cause is the leftover newline.)

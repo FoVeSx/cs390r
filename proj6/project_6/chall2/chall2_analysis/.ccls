@@ -1,0 +1,6 @@
+clang-14
+%h -x c++-header
+-Wall
+-Wextra
+%cpp -std=c++14
+-I/lib/llvm-14/include
